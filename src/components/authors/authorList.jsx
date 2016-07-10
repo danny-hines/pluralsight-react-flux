@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router';
 import AuthorApi from '../../api/authorApi';
 
 export default React.createClass({
@@ -24,7 +25,7 @@ export default React.createClass({
         function createAuthorRow (author) {
             return (
                 <tr key={author.id}>
-                    <td><a href={"/#authors/" + author.id}>{author.id}</a></td>
+                    <td><Link to={ `/author/${author.id}` }>{author.id}</Link></td>
                     <td>{author.firstName} {author.lastName}</td>
                 </tr>
             );

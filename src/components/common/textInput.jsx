@@ -1,7 +1,21 @@
 import React from 'react';
 
 export default React.createClass({
+    propTypes: {
+        name: React.PropTypes.string.isRequired,
+        label: React.PropTypes.string.isRequired,
+        onChange: React.PropTypes.func.isRequired,
+        placeholder: React.PropTypes.string,
+        value: React.PropTypes.string,
+        error: React.PropTypes.string
+    },
+
     render() {
+        var wrapperClass = 'form-group';
+        if (this.props.error) {
+            wrapperClass += ' has-error';
+        }
+
         return (
             <div className={wrapperClass}>
                 <label htmlFor={this.props.name}>{this.props.label}</label>
