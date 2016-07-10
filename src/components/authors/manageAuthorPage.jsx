@@ -1,7 +1,8 @@
 import React from 'react';
 import { hashHistory, withRouter } from 'react-router';
 import AuthorForm from './authorForm';
-import AuthorApi from '../../api/authorApi';
+import AuthorActions from '../../actions/authorActions';
+import AuthorStore from '../../stores/authorStore';
 import toastr from 'toastr';
 
 export default withRouter(
@@ -24,7 +25,7 @@ export default withRouter(
 
             if (authorId) {
                 this.setState({
-                    author: AuthorApi.getAuthorById(authorId)
+                    author: AuthorStore.getAuthorById(authorId)
                 });
             }
         },
@@ -85,9 +86,14 @@ export default withRouter(
                 return;
             }
 
-            AuthorApi.saveAuthor(this.state.author);
+            if (this.state.author.id) {
+                AuthorActions.updateAuthor(this.state.author);
+                toastr.success('Author updated.');
+            } else {
+                AuthorActions.createAuthor(this.state.author);
+                toastr.success('Author created.');
+            }
             this.dirty = false;
-            toastr.success('Author saved.');
             hashHistory.push('/authors');
         },
 

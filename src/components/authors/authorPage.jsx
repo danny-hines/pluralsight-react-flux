@@ -1,21 +1,28 @@
 import React from 'react';
-import AuthorApi from '../../api/authorApi';
+import AuthorStore from '../../stores/authorStore';
+import AuthorActions from '../../actions/authorActions';
 import AuthorList from './authorList';
 import { Link } from 'react-router';
 
 export default React.createClass({
-    getInitialState () {
-        return {
-            authors: []  
-        };
+    _onChange() {
+        this.setState({
+            authors: AuthorStore.getAllAuthors()
+        });
     },
 
-    componentDidMount () {
-        if (!this.isMounted()) return;
+    componentWillMount() {
+        AuthorStore.addChangeListener(this._onChange);  
+    },
 
-        this.setState({
-            authors: AuthorApi.getAllAuthors()
-        });
+    componentWillUnmount() {
+        AuthorStore.removeChangeListener(this._onChange);  
+    },
+
+    getInitialState () {
+        return {
+            authors: AuthorStore.getAllAuthors()
+        };
     },
 
     render () {

@@ -24,6 +24,7 @@
     },
     "globals": {
         "jQuery": true,
-        "$": true
+        "$": true,
+        "Symbol": true
     }
 }
